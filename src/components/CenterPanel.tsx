@@ -483,25 +483,25 @@ export default function CenterPanel({ onFileDrop, wavesurferRef }: CenterPanelPr
                 AI Mastering Assistant
               </h3>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={userGenre}
                 onChange={(e) => setUserGenre(e.target.value)}
                 placeholder="Genre (opsional)"
-                className="flex-1 bg-[var(--bg-elevated)] border border-[var(--border-default)] focus:border-[var(--accent)]/50 rounded-lg py-1.5 px-2.5 text-[10px] text-slate-300 focus:outline-none placeholder-slate-600"
+                className="sm:flex-1 bg-[var(--bg-elevated)] border border-[var(--border-default)] focus:border-[var(--accent)]/50 rounded-lg py-1.5 px-2.5 text-[10px] text-slate-300 focus:outline-none placeholder-slate-600"
               />
               <textarea
                 value={userIntent}
                 onChange={(e) => setUserIntent(e.target.value)}
                 placeholder="Suara yang diinginkan..."
                 rows={1}
-                className="flex-[2] bg-[var(--bg-elevated)] border border-[var(--border-default)] focus:border-[var(--accent)]/50 rounded-lg py-1.5 px-2.5 text-[10px] text-slate-300 focus:outline-none placeholder-slate-600 resize-none"
+                className="sm:flex-[2] bg-[var(--bg-elevated)] border border-[var(--border-default)] focus:border-[var(--accent)]/50 rounded-lg py-1.5 px-2.5 text-[10px] text-slate-300 focus:outline-none placeholder-slate-600 resize-none"
               />
               <button
                 onClick={handleApplyAIMastering}
                 disabled={aiApplying || !userIntent.trim()}
-                className="px-3 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-elevated)] disabled:text-neutral-500 text-white rounded-lg text-[9px] font-bold font-mono transition-colors shrink-0 cursor-pointer"
+                className="px-3 py-2 sm:py-1.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-elevated)] disabled:text-neutral-500 text-white rounded-lg text-[9px] font-bold font-mono transition-colors shrink-0 cursor-pointer"
               >
                 {aiApplying ? "..." : "Generate"}
               </button>

@@ -155,10 +155,18 @@ export default function App() {
 
       {/* 2. Main Workstation Area */}
       <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile overlay backdrop when left panel is open */}
+        {leftOpen && (
+          <div
+            className="fixed inset-0 bg-black/60 z-20 md:hidden"
+            onClick={() => setLeftOpen(false)}
+          />
+        )}
+
         {/* Presets Sidebar Collapsed Control */}
         <button
           onClick={() => setLeftOpen(!leftOpen)}
-          className={`absolute bottom-4 left-4 z-20 w-8 h-8 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent)] hover:text-[var(--accent)] flex items-center justify-center transition-all shadow-md`}
+          className={`absolute bottom-4 left-4 z-40 w-8 h-8 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent)] hover:text-[var(--accent)] flex items-center justify-center transition-all shadow-md`}
           title={leftOpen ? "Sembunyikan Menu Samping" : "Tampilkan Menu Samping"}
         >
           {leftOpen ? <ChevronLeft className="w-4 h-4" /> : <Folder className="w-4 h-4" />}
@@ -172,7 +180,6 @@ export default function App() {
           onFileDrop={handleLoadAudioFile} 
           wavesurferRef={wavesurferRef} 
         />
-
 
       </div>
 

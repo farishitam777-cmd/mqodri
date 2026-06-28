@@ -16,16 +16,16 @@ function MiniSlider({ label, value, display, min, max, step, onChange }: {
   onChange: (v: number) => void;
 }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-[9px] font-mono text-slate-400 w-16 shrink-0">{label}</span>
+    <div className="flex items-center gap-1.5 sm:gap-3">
+      <span className="text-[8px] sm:text-[9px] font-mono text-slate-400 w-11 sm:w-16 shrink-0 truncate">{label}</span>
       <input
         type="range"
         min={min} max={max} step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="flex-1 accent-blue-500 h-1 bg-[var(--bg-elevated)] rounded-lg cursor-pointer"
+        className="flex-1 accent-blue-500 h-1 bg-[var(--bg-elevated)] rounded-lg cursor-pointer min-w-[60px]"
       />
-      <span className="text-[10px] font-mono text-slate-300 w-14 text-right">{display}</span>
+      <span className="text-[9px] sm:text-[10px] font-mono text-slate-300 w-10 sm:w-14 text-right shrink-0">{display}</span>
     </div>
   );
 }
@@ -180,7 +180,7 @@ export default function SimplifiedMastering() {
       {/* Simplified 6-band EQ sliders */}
       <div className="bg-[var(--bg-elevated)] rounded-xl p-4 border border-[var(--border-subtle)]">
         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block mb-3">Atur Nada</span>
-        <div className="grid grid-cols-6 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
           {eqSliders.map((sb) => (
             <div key={sb.label} className="text-center">
               <input
@@ -188,7 +188,7 @@ export default function SimplifiedMastering() {
                 min={-12} max={12} step={0.5}
                 value={sb.gain}
                 onChange={(e) => setSimplifiedGain(chain.eq.bands, sb.fromId, sb.toId, parseFloat(e.target.value), updateEQBand)}
-                className="w-full accent-blue-500 h-20 bg-[var(--bg-elevated)] rounded-lg cursor-pointer"
+                className="w-full accent-blue-500 h-28 sm:h-20 bg-[var(--bg-elevated)] rounded-lg cursor-pointer"
                 style={{ writingMode: "vertical-lr", direction: "rtl", WebkitAppearance: "slider-vertical" }}
               />
               <span className="text-[10px] font-mono text-slate-400 mt-1 block">{sb.label}</span>

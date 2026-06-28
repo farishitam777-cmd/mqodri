@@ -149,7 +149,7 @@ export default function LeftPanel({ onLoadAudioBuffer }: LeftPanelProps) {
   };
 
   return (
-    <div className="w-80 border-r border-[var(--border-subtle)] bg-[var(--bg-panel)] flex flex-col h-full shrink-0 select-none">
+    <div className="w-80 border-r border-[var(--border-subtle)] bg-[var(--bg-panel)] flex flex-col h-full shrink-0 select-none fixed md:relative inset-y-0 left-0 z-30 md:z-auto md:inset-auto">
       {/* Navigation Tabs */}
       <div className="grid grid-cols-2 border-b border-[var(--border-subtle)] h-11 bg-[var(--bg-elevated)] p-1 gap-1">
         <button
