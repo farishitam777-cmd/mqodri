@@ -12,10 +12,6 @@ import {
   Download, 
   Sliders, 
   User, 
-  Sparkles,
-  HelpCircle,
-  FileAudio,
-  Upload,
   Menu
 } from "lucide-react";
 import { useMasterStore } from "../store/masterStore";
@@ -41,7 +37,6 @@ export default function Toolbar({
   const {
     user,
     setAuth,
-    activeProject,
     isPlaying,
     setPlaying,
     currentTime,
@@ -56,7 +51,6 @@ export default function Toolbar({
     redo,
     audioFile
   } = useMasterStore();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
@@ -93,54 +87,9 @@ export default function Toolbar({
       id="daw-toolbar"
       className="bg-[var(--bg-panel)] border-b border-[var(--border-subtle)] h-16 px-6 flex items-center justify-between select-none relative z-10"
     >
-      {/* Left section: App Name & Active File */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-lg">
-            M
-          </div>
-          <div>
-            <h1 className="text-sm font-semibold text-white tracking-tight leading-none">
-              Mastering Studio AI
-            </h1>
-            <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-medium">
-              Project: {activeProject ? activeProject.name : "Late Night Jazz Session"}
-            </p>
-          </div>
-        </div>
-
-        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg max-w-[240px] overflow-hidden">
-          <FileAudio className="w-4 h-4 text-blue-400 shrink-0" />
-          <div className="overflow-hidden flex-1 min-w-0">
-            <p className="text-xs font-medium text-slate-300 truncate leading-none mb-0.5">
-              {audioFile ? audioFile.name : "Tanpa File Audio"}
-            </p>
-            <p className="text-[9px] text-slate-500 font-mono leading-none">
-              {audioFile ? `${(audioFile.size / (1024 * 1024)).toFixed(2)} MB` : "Gunakan drag & drop"}
-            </p>
-          </div>
-          {audioFile && (
-            <>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="p-1 hover:bg-[var(--bg-hover)] rounded text-slate-500 hover:text-blue-400 transition-colors shrink-0"
-                title="Ganti File Audio"
-              >
-                <Upload className="w-3.5 h-3.5" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="audio/*"
-                className="hidden"
-                onChange={(e) => {
-                  if (e.target.files?.[0]) onReplaceAudio(e.target.files[0]);
-                  e.target.value = "";
-                }}
-              />
-            </>
-          )}
-        </div>
+      {/* Centered Title */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-semibold text-white tracking-tight pointer-events-none select-none">
+        Audio Mastering (Mqodri_project)
       </div>
 
       {/* Center Section: DAW Transport & Playback Control */}

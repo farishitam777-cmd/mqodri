@@ -166,7 +166,7 @@ export default function App() {
         {/* Presets Sidebar Collapsed Control */}
         <button
           onClick={() => setLeftOpen(!leftOpen)}
-          className={`absolute bottom-4 left-4 z-40 w-8 h-8 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent)] hover:text-[var(--accent)] flex items-center justify-center transition-all shadow-md`}
+          className={`absolute top-4 left-4 z-40 w-8 h-8 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent)] hover:text-[var(--accent)] flex items-center justify-center transition-all shadow-md`}
           title={leftOpen ? "Sembunyikan Menu Samping" : "Tampilkan Menu Samping"}
         >
           {leftOpen ? <ChevronLeft className="w-4 h-4" /> : <Folder className="w-4 h-4" />}
