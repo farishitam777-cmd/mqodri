@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+/* ponytail: accent color overrides — all blue-* classes use var(--accent) */
+:root { --accent: #3b82f6; --accent-hover: #2563eb; }
+.text-blue-400, .hover\:text-blue-400:hover, .text-blue-300 { color: var(--accent); }
+.bg-blue-500, .bg-blue-600, .hover\:bg-blue-500:hover { background-color: var(--accent); }
+.hover\:border-blue-500:hover, .focus\:border-blue-500:focus { border-color: var(--accent); }
+.border-blue-500 { border-color: var(--accent); }
+[class*="bg-blue-500/"] { background-color: color-mix(in srgb, var(--accent) 10%, transparent); }
+[class*="bg-blue-950/"] { background-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+[class*="border-blue-500/"] { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+[class*="text-blue-500"] { color: var(--accent); }
+
+/* ponytail: theme colors via CSS vars */
+:root {
+  --bg-app: #111318;
+  --bg-panel: #16181F;
+  --bg-elevated: rgba(0,0,0,0.4);
+  --bg-elevated-20: rgba(0,0,0,0.2);
+  --bg-hover: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.12);
+  --border-default: rgba(255,255,255,0.18);
+}
+
+.light {
+  --bg-app: #e8eaee;
+  --bg-panel: #f4f5f7;
+  --bg-elevated: rgba(255,255,255,0.7);
+  --bg-elevated-20: rgba(255,255,255,0.5);
+  --bg-hover: rgba(0,0,0,0.04);
+  --border-subtle: rgba(0,0,0,0.12);
+  --border-default: rgba(0,0,0,0.2);
+}
+.light, .light * { color-scheme: light; }
+.light .text-slate-100 { color: #0f172a; }
+.light .text-slate-200 { color: #1e293b; }
+.light .text-slate-300 { color: #1e293b; }
+.light .text-slate-400 { color: #334155; }
+.light .text-slate-500 { color: #475569; }
+.light .text-slate-600 { color: #64748b; }
+.light .text-white { color: #0f172a; }
+.light input, .light textarea, .light select { color-scheme: light; }
+.light ::-webkit-scrollbar-track { background: #d1d5db; }
+.light ::-webkit-scrollbar-thumb { background: #9ca3af; }
+
+/* Custom continuous spin animation for the playback loop icon */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* Smooth layout transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

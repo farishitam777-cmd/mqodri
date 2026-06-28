@@ -1,0 +1,8 @@
+node_modules/
+dist/
+mastering.db
+.env
+*.log
+.DS_Store
+.wrangler/
+.codegraph/

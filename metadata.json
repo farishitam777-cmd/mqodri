@@ -1,0 +1,6 @@
+{
+  "name": "Mastering Studio AI",
+  "description": "Professional browser-based audio mastering studio powered by Web Audio API and Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
