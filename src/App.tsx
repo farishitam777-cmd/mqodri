@@ -143,6 +143,11 @@ export default function App() {
 
   return (
     <div className={`h-screen flex flex-col bg-[var(--bg-app)] text-slate-400 font-sans overflow-hidden ${userSettings.theme}`} style={{ fontSize: `${userSettings.fontScale}%`, '--accent': userSettings.accentColor, '--accent-hover': userSettings.accentColor } as React.CSSProperties}>
+      {/* 0. Top Title Bar */}
+      <div className="bg-[var(--bg-panel)] border-b border-[var(--border-subtle)] h-9 flex items-center justify-center select-none shrink-0">
+        <span className="text-sm font-semibold text-white tracking-tight">Audio Mastering (Mqodri_project)</span>
+      </div>
+
       {/* 1. Header Toolbar Controls */}
       <Toolbar 
         onOpenAuth={() => setIsAuthOpen(true)}
