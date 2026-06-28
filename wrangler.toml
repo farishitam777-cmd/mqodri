@@ -3,8 +3,11 @@ pages_build_output_dir = "dist"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
+[assets]
+directory = "./dist"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "mastering-studio-db"
-database_id = ""
+database_id = "3bac8c9c-a5fb-464f-9c03-543fafda8f24"
 migrations_dir = "migrations"
