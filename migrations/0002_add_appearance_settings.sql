@@ -1,0 +1,2 @@
+ALTER TABLE settings ADD COLUMN accent_color TEXT DEFAULT '#3b82f6';
+ALTER TABLE settings ADD COLUMN font_scale INTEGER DEFAULT 100;

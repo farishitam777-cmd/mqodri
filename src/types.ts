@@ -117,7 +117,7 @@ export interface UserSettings {
   theme: "dark" | "light";
   language: "id" | "en";
   target_lufs: number;
-  default_export_format: "wav" | "mp3" | "flac" | "aac";
+  default_export_format: "wav"; // ponytail: only WAV export implemented
   shortcut_json: string | null;
   accentColor: string;
   fontScale: number;

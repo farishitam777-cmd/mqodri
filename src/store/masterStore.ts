@@ -178,7 +178,7 @@ export const useMasterStore = create<MasterStore>((set, get) => ({
     theme: "dark",
     language: "id",
     target_lufs: -14.0,
-    default_export_format: "wav",
+    default_export_format: "wav" as const,
     shortcut_json: null,
     accentColor: "#3b82f6",
     fontScale: 100

@@ -12,7 +12,8 @@ import {
   Download, 
   Sliders, 
   User, 
-  Menu
+  Menu,
+  FileInput
 } from "lucide-react";
 import { useMasterStore } from "../store/masterStore";
 import { audioEngine } from "../lib/audio/MasteringEngine";
@@ -53,6 +54,8 @@ export default function Toolbar({
   } = useMasterStore();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  // ponytail: replace audio — one hidden input, one button
+  const replaceAudioInputRef = useRef<HTMLInputElement>(null);
 
   // Click outside to close mobile menu
   useEffect(() => {
@@ -124,6 +127,27 @@ export default function Toolbar({
             title="Loop Playback"
           >
             <RotateCw className={`w-3 sm:w-3.5 h-3 sm:h-3.5 ${loop ? "animate-spin-slow" : ""}`} />
+          </button>
+
+          {/* ponytail: replace audio — swap the loaded track */}
+          <input
+            ref={replaceAudioInputRef}
+            type="file"
+            accept="audio/*"
+            onChange={(e) => {
+              if (e.target.files?.[0]) {
+                onReplaceAudio(e.target.files[0]);
+                e.target.value = ''; // ponytail: allow re-selecting same file
+              }
+            }}
+            className="hidden"
+          />
+          <button
+            onClick={() => replaceAudioInputRef.current?.click()}
+            className="w-8 sm:w-9 h-8 sm:h-9 bg-[var(--bg-elevated)] hover:bg-[var(--bg-hover)] text-slate-400 hover:text-white border border-[var(--border-subtle)] rounded-lg flex items-center justify-center transition-all"
+            title="Ganti Audio"
+          >
+            <FileInput className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
           </button>
         </div>
 

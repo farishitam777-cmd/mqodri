@@ -63,6 +63,8 @@ export function initDB() {
       shortcut_json TEXT,
       target_lufs REAL DEFAULT -14.0,
       default_export_format TEXT DEFAULT 'wav',
+      accent_color TEXT DEFAULT '#3b82f6',
+      font_scale INTEGER DEFAULT 100,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )

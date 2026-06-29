@@ -280,7 +280,9 @@ router.get("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) =
       language: "id", // Indonesian default as requested, or can toggle
       target_lufs: -14.0,
       default_export_format: "wav",
-      shortcut_json: null
+      shortcut_json: null,
+      accent_color: "#3b82f6",
+      font_scale: 100
     };
 
     // ponytail: gemini-only; openrouter/mimo removed
@@ -290,7 +292,11 @@ router.get("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) =
     if (userId) {
       const userSettings = db.prepare("SELECT * FROM settings WHERE user_id = ?").get(userId) as any;
       if (userSettings) {
-        settings = userSettings;
+        settings = {
+          ...userSettings,
+          accentColor: userSettings.accent_color || "#3b82f6",
+          fontScale: userSettings.font_scale || 100
+        };
       }
 
       const dbProviders = db.prepare("SELECT * FROM ai_providers WHERE user_id = ?").all(userId) as any[];
@@ -322,7 +328,7 @@ router.get("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) =
 // Update settings
 router.put("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) => {
   const userId = req.user?.id || null;
-  const { theme, language, target_lufs, default_export_format, shortcut_json } = req.body;
+  const { theme, language, target_lufs, default_export_format, shortcut_json, accent_color, font_scale } = req.body;
 
   if (!userId) {
     // Guest configuration (just respond success)
@@ -333,7 +339,7 @@ router.put("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) =
   try {
     db.prepare(`
       UPDATE settings 
-      SET theme = ?, language = ?, target_lufs = ?, default_export_format = ?, shortcut_json = ?
+      SET theme = ?, language = ?, target_lufs = ?, default_export_format = ?, shortcut_json = ?, accent_color = ?, font_scale = ?
       WHERE user_id = ?
     `).run(
       theme || "dark",
@@ -341,6 +347,8 @@ router.put("/settings", optionalAuthenticate, (req: AuthenticatedRequest, res) =
       target_lufs !== undefined ? target_lufs : -14.0,
       default_export_format || "wav",
       shortcut_json ? JSON.stringify(shortcut_json) : null,
+      accent_color || "#3b82f6",
+      font_scale || 100,
       userId
     );
 

@@ -12,7 +12,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [language, setLanguage] = useState<"id" | "en">("id");
   const [targetLUFS, setTargetLUFS] = useState(-14.0);
-  const [exportFormat, setExportFormat] = useState<"wav" | "mp3" | "flac" | "aac">("wav");
+  const [exportFormat, setExportFormat] = useState<"wav">("wav");
   
   const [accentColor, setAccentColor] = useState("#3b82f6");
   const [fontScale, setFontScale] = useState(100);
@@ -50,7 +50,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           theme,
           language,
           target_lufs: targetLUFS,
-          default_export_format: exportFormat
+          default_export_format: exportFormat,
+          accent_color: accentColor,
+          font_scale: fontScale
         })
       });
 
@@ -133,15 +135,13 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
               <div>
                 <label className="block text-xs font-mono text-slate-500 mb-1.5">FORMAT EXPORT DEFAULT</label>
+                {/* ponytail: only WAV export is implemented — hide dead options */}
                 <select
                   value={exportFormat}
                   onChange={(e: any) => setExportFormat(e.target.value)}
                   className="w-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] focus:border-blue-500 rounded-lg py-2 px-3 text-xs text-slate-300 focus:outline-none cursor-pointer"
                 >
                   <option value="wav">WAV (32-bit Float, Gapless)</option>
-                  <option value="mp3">MP3 (320kbps High)</option>
-                  <option value="flac">FLAC (Lossless)</option>
-                  <option value="aac">AAC (VBR Mastered)</option>
                 </select>
               </div>
             </div>
