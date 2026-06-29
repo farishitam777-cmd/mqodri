@@ -38,6 +38,7 @@ export class MasteringEngine {
   private storedCorrelation: number = 1.0;
   private lufsIntegratedAccum: number = -70;
   private outputTrimNode: GainNode | null = null;
+  private safetyClipper: WaveShaperNode | null = null;
 
   public initFromBuffer(audioBuffer: AudioBuffer, initialChain?: MasteringChain) {
     if (this.ctx) this.close();
@@ -114,7 +115,7 @@ export class MasteringEngine {
     this.humanizeNoiseGain.connect(currentNode);
 
     this.eqNodes = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) { // ponytail: 12-band EQ
       const filter = ctx.createBiquadFilter();
       filter.frequency.value = 1000;
       filter.Q.value = 1.0;
@@ -181,7 +182,13 @@ export class MasteringEngine {
     this.outputTrimNode = ctx.createGain();
     this.outputTrimNode.gain.value = 1.0;
     this.ceilingNode.connect(this.outputTrimNode);
-    this.outputTrimNode.connect(this.analyser);
+
+    // ponytail: safety hard-clipper at the very end — prevents digital overs regardless of user settings
+    this.safetyClipper = ctx.createWaveShaper();
+    this.safetyClipper.oversample = "4x";
+    this.safetyClipper.curve = this.makeSafetyCurve();
+    this.outputTrimNode.connect(this.safetyClipper);
+    this.safetyClipper.connect(this.analyser);
     this.analyser.connect(ctx.destination);
   }
 
@@ -213,6 +220,7 @@ export class MasteringEngine {
   public pause() {
     if (!this.ctx || !this.isEnginePlaying) return;
     if (this.sourceNode) {
+      this.sourceNode.onended = null; // ponytail: prevent stale onended from resetting offset
       try { this.sourceNode.stop(); } catch (e) {}
     }
     this.playbackOffset += this.ctx.currentTime - this.playbackStartTime;
@@ -249,6 +257,7 @@ export class MasteringEngine {
     const wasPlaying = this.isEnginePlaying;
     if (wasPlaying) {
       if (this.sourceNode) {
+        this.sourceNode.onended = null; // ponytail: prevent stale onended from resetting playbackOffset
         try { this.sourceNode.stop(); } catch (e) {}
       }
       this.isEnginePlaying = false;
@@ -449,6 +458,25 @@ export class MasteringEngine {
         this.ctx.currentTime
       );
     }
+  }
+
+  // ponytail: safety clipper — linear up to -0.5dBFS, then soft-knee to -0.2dBFS max
+  private makeSafetyCurve(size = 2048): Float32Array {
+    const curve = new Float32Array(size);
+    const threshold = 0.944; // -0.5dBFS
+    const ceiling = 0.977;   // -0.2dBFS
+    for (let i = 0; i < size; i++) {
+      const x = (i / (size - 1)) * 2 - 1;
+      const abs = Math.abs(x);
+      if (abs <= threshold) {
+        curve[i] = x;
+      } else {
+        const over = (abs - threshold) / (1 - threshold);
+        const out = threshold + (ceiling - threshold) * Math.sin(over * Math.PI / 2);
+        curve[i] = Math.sign(x) * Math.min(out, ceiling);
+      }
+    }
+    return curve;
   }
 
   private makeDistortionCurve(drive: number, type: "tube" | "tape" | "console", bias: number) {
@@ -790,6 +818,7 @@ export class MasteringEngine {
     this.humanizeLFODepth = null;
     this.humanizeNoiseGain = null;
     this.outputTrimNode = null;
+    this.safetyClipper = null;
   }
 }
 

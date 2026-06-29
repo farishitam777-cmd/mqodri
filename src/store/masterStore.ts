@@ -22,7 +22,9 @@ export const DEFAULT_MASTERING_CHAIN: MasteringChain = {
       { id: 7, type: "bell", freq: 2000, q: 1.0, gain: 0 },
       { id: 8, type: "bell", freq: 4000, q: 1.0, gain: 0 },
       { id: 9, type: "highshelf", freq: 12000, q: 0.7, gain: 0 },
-      { id: 10, type: "lowpass", freq: 20000, q: 0.7, gain: 0 }
+      { id: 10, type: "lowpass", freq: 20000, q: 0.7, gain: 0 },
+      { id: 11, type: "bell", freq: 8000, q: 1.0, gain: 0 },
+      { id: 12, type: "bell", freq: 16000, q: 1.0, gain: 0 }
     ]
   },
   compressor: {
